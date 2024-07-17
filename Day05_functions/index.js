@@ -69,5 +69,32 @@ greeting=(name,age=18)=>{
 greeting('haechan');
 
 
+
 // Activity 5
 // Task 9
+function1=(n)=>{
+    console.log(`hello`);
+};
+
+function function2(func,n){
+    for(let i=1;i<=n;i++){
+        func(n);
+    }
+}
+function2(function1,5);
+
+// Task 10
+fun1=(value)=>{
+    val=value;
+    return val;
+}
+
+fun2=(val)=>{
+    console.log(`result is ${val}`);
+}
+
+highFunction=(func1,func2,value)=>{
+    valueAssign=fun1(value);
+    fun2(valueAssign);
+};
+highFunction(fun1,fun2,5);
