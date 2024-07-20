@@ -49,7 +49,7 @@ console.log((product(5)));
 console.log((product(5,2)));
 
 
-// Activity 5
+// Activity 5 //TODO: Revise
 // Task 8
 const person={
     name,
