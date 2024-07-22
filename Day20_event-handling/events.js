@@ -41,3 +41,49 @@ input.addEventListener("keyup",()=>{
     para2.textContent=input.value;
 });
 
+
+// Activity 4
+// Task 7
+const form=document.getElementById('form');
+form.addEventListener("submit",(event)=>{
+    console.log(`Form Submitted!`);
+    event.preventDefault();
+});
+
+// Task 8
+const select=document.getElementById('pet-select');
+const para3=document.getElementById('para3');
+select.addEventListener("change",()=>{
+    para3.textContent=select.value;
+});
+
+
+// Activity 5 //ToDo:Revise
+// Task 9
+const list1=document.querySelectorAll('li');
+list1.forEach(li=>{
+    li.addEventListener("click",(event)=>{
+        console.log(event.target.innerText);
+    })
+});
+
+// Task 10
+const parent=document.getElementById('parent');
+const addChildButton=document.getElementById('addChild');
+
+parent.addEventListener("click",(event)=>{
+    if(event.target&&event.target.matches('.child')){
+        console.log(`Child Clicked:${event.target.textContent}`);
+    }
+});
+
+const addChild=()=>{
+    const newChild=document.createElement('div');
+    newChild.className='child';
+    newChild.textContent=`Child ${parent.children.length+1}`;
+    parent.appendChild(newChild);
+};
+
+addChildButton.addEventListener("click",addChild);
+
+
