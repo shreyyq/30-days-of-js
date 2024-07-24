@@ -1,3 +1,4 @@
+//todo:revise
 // Activity 1
 // Task 1
 function validateAge(age){
@@ -116,3 +117,92 @@ catch(error){
 finally{
     console.log('Input processing attempt Completed');
 };
+
+
+// Activity 4
+// Task 6
+function createRandomPromise(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            const isSuccess=Math.random()>0.5;
+            if(isSuccess){
+                resolve('Promise Resolved Successfully');
+            }
+            else{
+                reject('Promise rejected due to failure');
+            }
+        },1000)
+    })
+};
+
+createRandomPromise()
+.then(result=>{
+    console.log(result);
+})
+.catch(error=>{
+    console.error('Caught an error:',error);
+});
+
+// Task 7
+function createRandomPromise2(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            const isSuccess=Math.random()>0.5;
+            if(isSuccess){
+                resolve('Promise Resolved Successfully');
+            }
+            else{
+                reject('Promise rejected due to failure');
+            }
+        },1000)
+    })
+};
+
+async function handlePromise(){
+    try{
+        const result=await createRandomPromise2();
+        console.log(result);
+    }
+    catch(error){
+        console.error('Caught an error:',error);
+    }
+};
+handlePromise();
+
+
+// Activity 5
+// Task 8
+const invalidUrl="https://invalid-url.example.com";
+
+fetch(invalidUrl)
+.then(response=>{
+    if(!response.ok){
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+})
+.then(data=>{
+    console.log(`Data Received:`,data);
+})
+.catch(error=>{
+    console.error(`Caught an error:`,error.message);
+});
+
+// Task 9
+async function fetchDataFromInvalidUrl(){
+    const invalidUrl2="https://invalid-url.example.com";
+
+    try{
+        const response=await fetch(invalidUrl2);
+
+        if(!response.ok){
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data=await response.json();
+        console.log(`Data Received:`,data);
+    }
+    catch(error){
+        console.error(`Caught an error:`,error.message);
+    }
+};
+fetchDataFromInvalidUrl();
