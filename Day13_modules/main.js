@@ -44,3 +44,25 @@ try{
 catch(error){
     console.error(error.message);
 };
+
+
+// Activity 4
+// Task 6
+import uniq from 'lodash/uniq.js';
+const array=[1,2,2,3,4,4,5];
+const uniqueArray=uniq(array);
+console.log(uniqueArray);
+
+// Task 7
+import axios from 'axios';
+async function fetchData(){
+    try{
+        const response=await axios.get('https://jsonplaceholder.typicode.com/posts/1');
+        console.log(response.data);
+    }
+    catch (error){
+        console.error('Error fetching data:',error);
+    }
+};
+fetchData();
+
