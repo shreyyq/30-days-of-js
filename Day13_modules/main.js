@@ -44,7 +44,3 @@ try{
 catch(error){
     console.error(error.message);
 };
-
-
-// Activity 4
-// Task 6
