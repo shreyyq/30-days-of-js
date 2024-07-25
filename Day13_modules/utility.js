@@ -42,8 +42,3 @@ export function divide(a,b){
 export default function welcome(name){
     return `Welcome to JS Modules, ${name}`;
 };
-
-
-// Activity 3
-// Task 5
-
