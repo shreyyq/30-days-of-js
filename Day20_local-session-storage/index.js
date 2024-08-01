@@ -21,22 +21,35 @@ console.log(retrievedObj);
 
 // Activity 2
 // Task 3
-const display=document.getElementById("demo");
-function handleSubmit(e){
-    e.preventDefault();
-    const formdata=new FormData(e.target);
-    const object={};
-    formdata.forEach((value,key)=>{
-        object[key]=value;
-    });
-    localStorage.setItem("formData",JSON.stringify(object));
-}
-document.querySelector("form").addEventListener("submit",handleSubmit);
+function handleSubmit(event){
+    event.preventDefault();
+    const name=document.getElementById('name').value;
+    const email=document.getElementById('email').value;
 
-window.onload=function(){
-    const retrievedObjectString=localStorage.getItem("formData");
-    const retrievedObject=JSON.parse(retrievedObjectString);
-    const name=retrievedObject.name;
-    const email=retrievedObject.email;
-    display.innerHTML=`Name: ${name} and Email:${email}`;
-};
+    localStorage.setItem('name',name);
+    localStorage.setItem('email',email);
+
+    displaySavedData();
+    document.querySelector('form').reset();
+}
+
+function displaySavedData(){
+    const savedName=localStorage.getItem('name');
+    const savedEmail=localStorage.getItem('email');
+
+    if(savedName && savedEmail){
+        document.getElementById('demo').textContent=`Name: ${savedName}, Email:${savedEmail}`;
+    }
+}
+document.addEventListener('DOMContentLoaded',displaySavedData);
+
+// Task 4
+function removeItem(key){
+    console.log(`Content before removal of ${key}:`,localStorage.getItem(key));
+    localStorage.removeItem(key);
+    console.log(`Content after removal of ${key}:`,localStorage.getItem(key));
+}
+document.addEventListener('DOMContentLoaded',function(){
+    displaySavedData();
+    setTimeout(()=>removeItem('name'),5000);
+});
