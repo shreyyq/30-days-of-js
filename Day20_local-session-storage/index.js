@@ -53,3 +53,20 @@ document.addEventListener('DOMContentLoaded',function(){
     displaySavedData();
     setTimeout(()=>removeItem('name'),5000);
 });
+
+
+// Activity 3
+// Task 5
+const string="Hello, World! from Sessions Storage";
+sessionStorage.setItem("keys",string);
+const retrievedString=sessionStorage.getItem("keys");
+console.log(retrievedString);
+
+// Task 6
+sessionStorage.setItem("obj",objString);
+const newString=JSON.parse(sessionStorage.getItem("obj",objString));
+console.log(newString);
+
+
+// Activity 4
+// Task 7
