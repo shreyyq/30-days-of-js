@@ -14,3 +14,12 @@ sessionStorage.setItem('user',userJSON);
 const retrievedUserJSON=sessionStorage.getItem('user');
 const retrievedUser=JSON.parse(retrievedUserJSON);
 console.log(retrievedUser);
+
+
+// Activity 4
+// Task 8
+console.log(`Before removal:`,sessionStorage.getItem('name'));
+sessionStorage.removeItem('name');
+console.log(`After removal:`,sessionStorage.getItem('name'));
+
+

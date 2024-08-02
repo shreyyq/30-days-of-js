@@ -7,6 +7,35 @@
 </head>
 <body>
     <h1>Session Storage In JavaScript</h1>
+    <!-- Activity 4 -->
+     <!-- Task 7 -->
+      <form id="userForm">
+        <input type="text" id="name" placeholder="Name"><br>
+        <input type="email" id="email" placeholder="Email"><br>
+        <button type="submit">Submit</button>
+      </form>
+      <p id="displayData"></p>
+      <script>
+        document.getElementById('userForm').addEventListener('submit',function(event){
+            event.preventDefault();
+
+            const name=document.getElementById('name').value;
+            const email=document.getElementById('email').value;
+
+            sessionStorage.setItem('name',name);
+            sessionStorage.setItem('email',email);
+
+            displaySavedData();
+        });
+        function displaySavedData(){
+            const savedName=sessionStorage.getItem('name');
+            const savedEmail=sessionStorage.getItem('email');
+
+            document.getElementById('displayData').textContent=`Name: ${savedName} , Email: ${savedEmail}`;
+        }
+        document.addEventListener('DOMContentLoaded',displaySavedData);
+        </script>
+
     <script src="index.js"></script>
 </body>
 </html>
