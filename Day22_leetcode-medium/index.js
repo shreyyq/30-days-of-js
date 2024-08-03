@@ -78,3 +78,109 @@ const s3=(lengthOfLongestSubstring("pwwkew"));
 console.log(s3);
 
 
+// Activity 3 (Container with most Water)
+function maxArea(height){
+    let maxArea=0;
+    let left=0;
+    let right=height.length-1;
+
+    while(left<right){
+        maxArea=Math.max(maxArea,(right-left)*Math.min(height[left],height[right]));
+
+        if(height[left]<height[right]){
+            left++;
+        }
+        else{
+            right--;
+        }
+    }
+    return maxArea;
+};
+const h1=(maxArea([1,8,6,2,5,4,8,3,7]));
+console.log(h1);
+const h2=(maxArea([1,1]));
+console.log(h2);
+
+
+// Activity 4 (3 Sum)
+function threeSum(num){
+    let res=[];
+    num.sort((a,b)=>a-b);
+
+    for(let i=0;i<num.length;i++){
+        if(i>0&&num[i]===num[i-1]){
+            continue;
+        }
+        let j=i+1;
+        let k=num.length-1;
+
+        while(j<k){
+            let total=num[i]+num[j]+num[k];
+
+            if(total>0){
+                k--;
+            }
+            else if(total<0){
+                j++;
+            }
+            else{
+                res.push([num[i],num[j],num[k]]);
+                j++;
+
+                while(num[j]===num[j-1]&&j<k){
+                    j++;
+                }
+            }
+        }
+    }
+    return res;
+};
+
+const n1=(threeSum([-1,0,1,2,-1,-4]));
+console.log(n1);
+const n2=(threeSum([0,1,1]));
+console.log(n2);
+
+
+// Activity 5 (Group Anagrams)
+function getSignature(s){
+    const count=Array(26).fill(0);
+    for(const c of s){
+        count[c.charCodeAt(0)-'a'.charCodeAt(0)]++;
+    }
+    const result=[];
+    for(let i=0;i<26;i++){
+        if(count[i]!==0){
+            result.push(String.fromCharCode(i+'a'.charCodeAt(0)),count[i].toString());
+        }
+    }
+    return result.join('');
+};
+
+function groupAnagrams(str){
+    const result=[];
+    const groups=new Map();
+    for(const s of str){
+        const signature=getSignature(s);
+        if(!groups.has(signature)){
+            groups.set(signature,[]);
+        }
+        groups.get(signature).push(s);
+    }
+    groups.forEach(value=>result.push(value));
+    return result;
+};
+
+const str1=(groupAnagrams(["eat","tea","tan","ate","nat","bat"]));
+console.log(str1);
+const str2=(groupAnagrams([""]));
+console.log(str2);
+const str3=(groupAnagrams(["a"]));
+console.log(str3);
+
+
+
+
+
+
+
