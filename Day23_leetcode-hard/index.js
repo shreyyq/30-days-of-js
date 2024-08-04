@@ -49,3 +49,77 @@ console.log(num2);
 
 
 // Activity 2 (Merge k Sorted Lists)
+const PriorityQueue=require('js-priority-queue');
+
+function mergeKLists(list){
+    const queue=new PriorityQueue({comparator:(a,b)=>a.val-b.val});
+
+    for(const head of list){
+        if(head){
+            queue.queue(head);
+        }
+    }
+
+    let result=new ListNode();
+    const head=result;
+
+    while(queue.length){
+        const {val,next}=queue.dequeue();
+
+        result.next=new ListNode(val);
+        result=result.next;
+
+        if(next){
+            queue.queue(next);
+        }
+    }
+    return head.next;
+};
+
+class ListNode{
+    constructor(val=0,next=null){
+        this.val=val;
+        this.next=next;
+    }
+};
+
+function createLinkedList(arr){
+    if(arr.length===0) return null;
+
+    let head=new ListNode(arr[0]);
+    let current=head;
+
+    for(let i=1;i<arr.length;i++){
+        current.next=new ListNode(arr[i]);
+        current=current.next;
+    }
+    return head;
+};
+
+function linkedListToArray(head){
+    let arr=[];
+    let current=head;
+
+    while(current){
+        arr.push(current.val);
+        current=current.next;
+    }
+    return arr;
+};
+
+let list1=[
+    createLinkedList([1,4,5]),
+    createLinkedList([1,3,4]),
+    createLinkedList([2,6])
+];
+let mergedHead1=mergeKLists(list1);
+console.log(linkedListToArray(mergedHead1));
+
+let list2=[];
+let mergedHead2=mergeKLists(list2);
+console.log(linkedListToArray(mergedHead2));
+
+let list3=[createLinkedList([])];
+let mergedHead3=mergeKLists(list3);
+console.log(linkedListToArray(mergedHead3));
+
