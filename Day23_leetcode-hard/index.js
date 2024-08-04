@@ -123,3 +123,110 @@ let list3=[createLinkedList([])];
 let mergedHead3=mergeKLists(list3);
 console.log(linkedListToArray(mergedHead3));
 
+
+
+// Activity 3 (Trapping Rain Water)
+function trap(height){
+    let i=0;
+    let left_max=height[0];
+    let sum=0;
+    let j=height.length-1;
+    let right_max=height[j];
+    while(i<j){
+        if(left_max<=right_max){
+            sum+=left_max-height[i];
+            i++;
+            left_max=Math.max(left_max,height[i]);
+        }
+        else{
+            sum+=right_max-height[j];
+            j--;
+            right_max=Math.max(right_max,height[j]);
+        }
+    }
+    return sum;
+};
+
+const h1=(trap([0,1,0,2,1,0,1,3,2,1,2,1]));
+console.log(h1);
+const h2=(trap([4,2,0,3,2,5]));
+console.log(h2);
+
+
+// Activity 4 (N-Queens) //TODO:Complete!!
+function solveNQueens(n){
+    const result=[];
+    const board=Array.from({length:n},()=> Array(n).fill('.'));
+    placeQueens(board,0,result);
+    return result;
+};
+
+function placeQueens(board,row,result){
+    if(row===board.length){
+        result.push(board.map(row=>row.join('')));
+        return;
+    }
+    for(let col=0;col<board.length;col++){
+        if(isValid(board,row,col)){
+            board[row][col]='Q';
+            placeQueens(board,row+1,result);
+            board[row][col]='.';
+        }
+    }
+};
+
+function isValid(board,row,col){
+    for(let i=0;i<row;i++){
+        if(board[i][col]==='Q') return false;
+    }
+    for(let i=row-1,j=col-1;i>=0&&j>=0;i--,j--){
+        if(board[i][j]==='Q') return false;
+    }
+    for(let i=row-1,j=col+1;i>=0&&j<board.length;i--,j++){
+        if(board[i][j]==='Q') return false;
+    }
+    return true;
+};
+
+const n1=(solveNQueens(4));
+console.log(n1);
+const n2=(solveNQueens(1));
+console.log(n2);
+//const n3=(solveNQueens(8));
+//console.log(n3);
+
+
+// Activity 5 (Word Ladder) //ToDo:Revise!!
+function ladderLength(beginWord,endWord,wordList){
+    let wordSet=new Set(wordList);
+    if(!wordSet.has(endWord)) return 0;
+
+    let queue=[[beginWord,1]];
+
+    while(queue.length){
+        let[currentWord,steps]=queue.shift();
+
+        if(currentWord===endWord) return steps;
+
+        for(let i=0;i<currentWord.length;i++){
+            for(let c=97;c<=122;c++){
+                const newWord=currentWord.slice(0,i)+String.fromCharCode(c)+currentWord.slice(i+1);
+
+                if(wordSet.has(newWord)){
+                    queue.push([newWord,steps+1]);
+                    wordSet.delete(newWord);
+                }
+            }
+        }
+    }
+    return 0;
+};
+
+const b1="hit";
+const e1="cog";
+const w1=["hot","dot","lot","log","cog"];
+console.log(ladderLength(b1,e1,w1));
+
+
+
+
