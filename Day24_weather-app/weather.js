@@ -52,26 +52,31 @@ function displayForecast(forecastList){
         const date=new Date(forecast.dt_txt).toLocaleDateString();
         const temp=forecast.main.temp;
         const condition=forecast.weather[0].description;
+        const icon=forecast.weather[0].icon;
 
         const forecastElement=document.createElement('div');
         forecastElement.className='forecast-item';
         forecastElement.innerHTML=`
-        <p>Date:${date}</p>
+         <p>Date:${date}</p>
         <p>Temperature:${temp}°C</p>
         <p>Condition:${condition}</p>
+        <img src="http://openweathermap.org/img/wn/${icon}.png" alt="${condition} icon">
         `;
-        forecastContainer.appendChild(forecastElement);
+    
+    forecastContainer.appendChild(forecastElement);
     }
 }
 
 window.onload=function(){
 const defaultCity='Almora';
 fetchWeatherData(defaultCity);
- };
+document.getElementById('forecastButton').disabled=true;
+};
 
 document.getElementById('searchButton').addEventListener('click',function(){
     const cityName=document.getElementById('cityInput').value;
     fetchWeatherData(cityName);
+    document.getElementById('forecastButton').disabled=false;
 });
 
 document.getElementById('forecastButton').addEventListener('click',function(){
@@ -81,5 +86,5 @@ document.getElementById('forecastButton').addEventListener('click',function(){
 
 document.getElementById('refreshButton').addEventListener('click',function(){
     window.location.reload();
-})
+});
 
