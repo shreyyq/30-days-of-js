@@ -1,3 +1,17 @@
+function applyWeatherAnimation(condition){
+    const weatherAnimation=document.getElementById('weatherAnimation');
+    weatherAnimation.className='weather-animation';
+
+    if(condition.includes('rain')){
+        weatherAnimation.classList.add('rain');
+    }
+    else if(condition.includes('snow')){
+        weatherAnimation.classList.add('snow');
+    }
+    else if(condition.includes('clear')){
+        weatherAnimation.classList.add('sunny');
+    }
+}
 function fetchWeatherData(city){
     const apiKey='6b55fbeabb82c91644f67e6922f654ae';
     const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -13,6 +27,7 @@ function fetchWeatherData(city){
             document.getElementById('cityName').textContent=data.name;
             document.getElementById('temperature').textContent=data.main.temp;
             document.getElementById('weatherCondition').textContent=data.weather[0].description;
+            applyWeatherAnimation(data.weather[0].description.toLowerCase());
         }
         else{
             throw new Error('Incomplete data received from the API');

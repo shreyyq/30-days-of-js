@@ -114,3 +114,48 @@ body{
 .forecast-item img:hover {
     transform: rotate(360deg);
 }
+
+/* General styles for weather animations */
+.weather-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1; /* Ensure it is behind other content */
+}
+
+/* Rain animation */
+@keyframes raindrop {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.rain {
+    background: url('raindrop.png') repeat top center;
+    animation: raindrop 1s linear infinite;
+}
+
+/* Snow animation */
+@keyframes snowfall {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.snow {
+    background: url('snowflake.png') repeat top center;
+    animation: snowfall 3s linear infinite;
+}
+
+/* Sunny animation (just an example, could be a rotating sun icon) */
+@keyframes sunny {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sunny {
+    background: url('sun.png') no-repeat center;
+    animation: sunny 10s linear infinite;
+    background-size: contain;
+}
