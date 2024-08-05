@@ -8,21 +8,23 @@
 </head>
 <body>
     <div class="container">
-        <!-- Activity 1 -->
-         <!-- Task 1 -->
         <h1>Weather App</h1>
         <div id="weatherInfo">
-            <p>City:<span id="cityName"></span></p>
-            <p>Temperature:<span id="temperature"></span>°C</p>
-            <p>Condition:<span id="weatherCondition"></span></p>
+            <p><u>City:</u><span id="cityName"></span></p>
+            <p><u>Temperature:</u><span id="temperature"></span>°C</p>
+            <p><u>Condition:</u><span id="weatherCondition"></span></p>
         </div>
         <div>
             <input type="text" id="cityInput" placeholder="Enter City Name">
             <button id="searchButton">Search</button>
         </div>
+
         <div id="forecast">
-            
+            <button id="forecastButton">Show Forecast</button>
+            <p id="forecastInfo"></p>
+            <button id="refreshButton">Refresh</button>
         </div>
+        
     </div>
     <script src="weather.js"></script>
 </body>
