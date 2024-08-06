@@ -1,26 +1,38 @@
-const apiKey='c40d087c';
+document.addEventListener('DOMContentLoaded',function(){
+    const searchButton=document.getElementById('searchButton');
 
-function searchMovie(){
-    const movieName=document.getElementById('movieName').value;
-    const url=`http://www.omdbapi.com/?t=${encodeURIComponent(movieName)}&apikey=${apiKey}`;
+    searchButton.addEventListener('click',getMovieInfo);
+    refreshButton.addEventListener('click',refreshPage);
 
-    fetch(url)
-    .then(response=>response.json())
-    .then(data=>{
-        if(data.response==='True'){
-            displayMovieInfo(data);
-        }
-        else{
-            document.getElementById('movieInfo').innerHTML=`<p>${data.Error}</p>`;
-        }
-    })
-    .catch(error=> console.error('Error:',error));
-};
+    function getMovieInfo(){
+        const movieName=document.getElementById('movieName').value;
+        const apiKey='c40d087c';
+        const url=`http://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(movieName)}`;
 
-function displayMovieInfo(movie){
-    const movieInfo=`
-    <h2>${movie.title} (${movie.year})</h2>
-    <img src="${movie.Poster}" alt="${movie.Title} Poster">
-    `;
-    document.getElementById('movieInfo').innerHTML=movieInfo;
-}
+        fetch(url)
+        .then(response=>response.json())
+        .then(data=>{
+            const movieInfo=document.getElementById('movieInfo');
+            movieInfo.innerHTML='';
+
+            if(data.Response==='True'){
+                movieInfo.innerHTML=`
+                <h2>${data.Title} (${data.Year})</h2>
+                <img src="${data.Poster}" alt="Poster of ${data.Title}">
+                `;
+            }
+            else{
+                movieInfo.innerHTML=`<p>${data.Error}</p>`;
+            }
+        })
+        .catch(error=>{
+            console.error('Fetch Error:',error);
+            const movieInfo=document.getElementById('movieInfo');
+            movieInfo.innerHTML=`<p> There was an error fetching the movie data. Please try again later.`;
+        });
+    }
+});
+
+document.getElementById('refreshButton').addEventListener('click',function () {
+    window.location.reload();
+});
