@@ -17,7 +17,10 @@ document.addEventListener('DOMContentLoaded',function(){
                 movieInfo.innerHTML=`
                 <h2>${data.Title} (${data.Year})</h2>
                 <img src="${data.Poster}" alt="Poster of ${data.Title}">
+                <button id="moreInfoButton">More Info</button>
                 `;
+
+                document.getElementById('moreInfoButton').addEventListener('click',()=>showModal(data));
             }
             else{
                 movieInfo.innerHTML=`<p>${data.Error}</p>`;
@@ -28,6 +31,27 @@ document.addEventListener('DOMContentLoaded',function(){
             const movieInfo=document.getElementById('movieInfo');
             movieInfo.innerHTML=`<p> There was an error fetching the movie data. Please try again later.`;
         });
+    }
+
+    const modal=document.getElementById('infoModal');
+    const span=document.getElementsByClassName('close')[0];
+
+    function showModal(movie){
+        document.getElementById('modalTitle').textContent=`${movie.Title} (${movie.Year})`;
+        document.getElementById('modalPlot').textContent=`Plot: ${movie.Plot}`;
+        document.getElementById('modalDirector').textContent=`Director: ${movie.Director}`;
+        document.getElementById('modalActors').textContent=`Actors: ${movie.Actors}`;
+        modal.style.display='block';
+    }
+
+    span.onclick=function(){
+        modal.style.display='none';
+    }
+
+    window.onclick=function(event){
+        if(event.target===modal){
+            modal.style.display='none';
+        }
     }
 });
 
