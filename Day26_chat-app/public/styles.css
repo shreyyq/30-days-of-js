@@ -1,6 +1,7 @@
 html{
     font-size: 62.5%;
     }
+
     body{
     margin:0;
     padding: 0;
@@ -13,11 +14,17 @@ html{
     flex-direction:column;
     width: 30%;
     height: 70vh;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0  0 10px rgba(0,0,0,0.1);
     }
+
     .msg{
     color:blueviolet;
     font-size: 2rem;
     }
+
     .msgCtn{
     margin: 1rem 0;
     color: white;
@@ -26,10 +33,12 @@ html{
     border-radius: 6px;
     font-size: 2rem
     }
+
     .msgForm{
     display:flex;
     flex-direction:row;
     }
+
     .input{
     height: 100%;
     flex: 4;
@@ -40,9 +49,11 @@ html{
     font-size: 1.5rem;
     background-color:aliceblue;
     }
+
     .input:focus{
     background-color:white;
     }
+    
     .btn{
     height:5rem;
     flex: 1;
