@@ -28,7 +28,7 @@ body {
   }
 
   button{
-    background-color: #007bff;
+    background-color: #23ce6b;;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -38,7 +38,7 @@ body {
   }
 
   button:hover{
-    background-color: #0056bc;
+    background-color: #1B9D51;
   }
   
   ul {
@@ -61,7 +61,7 @@ body {
   }
   
   .edit-btn{
-    background: #23ce6b;
+    background: #007BFF;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -70,7 +70,7 @@ body {
   }
   
   .edit-btn:hover{
-    background-color: #1B9D51;
+    background-color: #0056b3;
   } 
 
   .delete-btn{
@@ -84,4 +84,9 @@ body {
 
   .delete-btn:hover{
     background-color: #b54141;
+  }
+
+  .completed{
+    text-decoration: line-through;
+    color: gray;
   }

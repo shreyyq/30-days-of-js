@@ -47,8 +47,8 @@ function displayTasks(){
             taskItem.classList.add('completed');
         }
         taskItem.innerHTML=`
-        <input type="checkbox" ${task.completed ? 'checked':''} onclick="toggleComplete(${task.id})">
-        <span>${task.title} - ${task.description} (Due: ${task.dueDate})</span>
+        <span>${task.title}  ${task.description}  (${task.dueDate})</span>
+        <button class="complete-btn" onclick="toggleComplete(${task.id})">${task.completed ? 'Undo': 'Complete'}</button>
         <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
         <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
         `;
