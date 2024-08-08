@@ -47,8 +47,9 @@ function displayTasks(){
             taskItem.classList.add('completed');
         }
         taskItem.innerHTML=`
+        <input type="checkbox" ${task.completed ? 'checked':''} onclick="toggleComplete(${task.id})">
         <span>${task.title} - ${task.description} (Due: ${task.dueDate})</span>
-        <button class="edit-btn" onclick=""editTask(${task.id})">Edit</button>
+        <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
         <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
         `;
         taskList.appendChild(taskItem);
@@ -56,7 +57,7 @@ function displayTasks(){
 }
 
 function toggleComplete(id){
-    const task=task.find(t=>t.id===id);
+    const task=tasks.find(t=>t.id===id);
     if(task){
         task.completed=!task.completed;
         displayTasks();
@@ -76,12 +77,13 @@ function editTask(id){
         taskForm.querySelector('button').textContent='Update Task';
     }
 }
+
 function deleteTask(id){
     if(confirm('Are you sure you want to delete this task?')){
         tasks=tasks.filter(task=>task.id!==id);
         displayTasks();
     }
-};
+}
 
 window.toggleComplete=toggleComplete;
 window.editTask=editTask;
