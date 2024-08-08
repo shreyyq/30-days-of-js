@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
 const taskForm=document.getElementById('task-form');
 const taskList=document.getElementById('task-list');
+
 let tasks=[];
 let editMode=false;
 let editTaskId=null;
@@ -19,13 +20,15 @@ taskForm.addEventListener('submit',function(event){
     task.dueDate=dateInput.value;
     editMode=false;
     editTaskId=null;
+    taskForm.querySelector('button').textContent="Add Text";
     }
     else{
         const task={
         id: Date.now(),
         title: titleInput.value.trim(),
         description: descInput.value.trim(),
-        dueDate: dateInput.value
+        dueDate: dateInput.value,
+        completed:false
     };
     tasks.push(task);
     }
@@ -40,6 +43,9 @@ function displayTasks(){
     tasks.forEach(task=>{
         const taskItem=document.createElement('li');
         taskItem.classList.add('task-item');
+        if(task.completed){
+            taskItem.classList.add('completed');
+        }
         taskItem.innerHTML=`
         <span>${task.title} - ${task.description} (Due: ${task.dueDate})</span>
         <button class="edit-btn" onclick=""editTask(${task.id})">Edit</button>
@@ -47,6 +53,14 @@ function displayTasks(){
         `;
         taskList.appendChild(taskItem);
     });
+}
+
+function toggleComplete(id){
+    const task=task.find(t=>t.id===id);
+    if(task){
+        task.completed=!task.completed;
+        displayTasks();
+    }
 }
 
 function editTask(id){
@@ -57,7 +71,9 @@ function editTask(id){
         document.getElementById('task-date').value=task.dueDate;
 
         editMode=true;
-        editTaskId=id;    
+        editTaskId=id;
+        
+        taskForm.querySelector('button').textContent='Update Task';
     }
 }
 function deleteTask(id){
@@ -67,6 +83,7 @@ function deleteTask(id){
     }
 };
 
+window.toggleComplete=toggleComplete;
 window.editTask=editTask;
 window.deleteTask=deleteTask;
 
