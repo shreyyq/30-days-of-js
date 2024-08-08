@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4ff;
     margin: 0;
     padding: 0;
   }
@@ -11,6 +11,8 @@ body {
     background: #fff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    text-align: center;
   }
   
   form {
@@ -22,11 +24,27 @@ body {
     margin: 10px 0;
     padding: 10px;
     font-size: 16px;
+    border-radius: 5px;
+  }
+
+  button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover{
+    background-color: #0056bc;
   }
   
   ul {
     list-style: none;
     padding: 0;
+    border-radius: 5px;
   }
   
   li {
@@ -35,14 +53,15 @@ body {
     background: #e3e3e3;
     margin: 10px 0;
     padding: 10px;
+    border-radius: 5px;
   }
   
   .task-item {
     cursor: pointer;
   }
   
-  .edit-btn, .delete-btn {
-    background: #ff4d4d;
+  .edit-btn{
+    background: #23ce6b;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -50,6 +69,19 @@ body {
     margin-left: 5px;
   }
   
-  .edit-btn:hover, .delete-btn:hover {
-    background: #ff0000;
-  }  
+  .edit-btn:hover{
+    background-color: #1B9D51;
+  } 
+
+  .delete-btn{
+    background: #dc2828;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+
+  .delete-btn:hover{
+    background-color: #b54141;
+  }
