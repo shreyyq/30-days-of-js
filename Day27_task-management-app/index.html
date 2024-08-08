@@ -10,8 +10,10 @@
     <div class="container">
         <h1>Task Manager</h1>
         <form id="task-form">
-            <input type="text" id="task-input" placeholder="Enter New Task"/>
-            <button type="submit" id="submitButton">Add Task</button>
+            <input type="text" id="task-title" placeholder="Enter Task Title" required>
+            <textarea id="task-desc" placeholder="Enter Task Description"></textarea>
+            <input type="date" id="task-date" required>
+            <button type="submit">Add Task</button>
         </form>
         <ul id="task-list"></ul>
     </div>

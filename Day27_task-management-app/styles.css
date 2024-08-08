@@ -1,45 +1,55 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
+  }
+  
+  .container {
+    width: 50%;
+    margin: 50px auto;
+    background: #fff;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-#task-input{
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-#task-input{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input, textarea, button {
+    margin: 10px 0;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-}
-
-#submitButton {
-    background-color: #007bff;
+    font-size: 16px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    justify-content: space-between;
+    background: #e3e3e3;
+    margin: 10px 0;
+    padding: 10px;
+  }
+  
+  .task-item {
+    cursor: pointer;
+  }
+  
+  .edit-btn, .delete-btn {
+    background: #ff4d4d;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#submitButton:hover {
-    background-color: #0056b3;
-}
+    margin-left: 5px;
+  }
+  
+  .edit-btn:hover, .delete-btn:hover {
+    background: #ff0000;
+  }  
