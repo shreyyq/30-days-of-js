@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Dashboard</title>
+    <title>Social Media</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="dashboard">
+  <header>
+    <h1>Social Media</h1>
+    <nav>
+        <a href="#login">Login</a>
+        <a href="#posts">Posts</a>
+    </nav>
+    </header>
 
-    </div>
-
-    <div id="login-form">
-        <h2>Login</h2>
-        <form id="login">
-            <div class="form-group">
+    <main>
+        <section id="login">
+            <fom id="login-form">
                 <label for="username">Username:</label>
-                <input type="text" id="username" required>
-            </div>
-            <div class="form-group">
+                <input type="text" id="username" name="username" required>
                 <label for="password">Password:</label>
-                <input type="password" id="password" required>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </fom>
+        </section>
+        <section id="posts">
+            <form id="post-form">
+                <label for="post-text">Post Text:</label>
+                <textarea id="post-text" name="post-text" required></textarea>
+                <label for="post-image">Post Image URL:</label>
+                <input type="text" id="text-image" name="post-image">
+                <button type="submit">Create Post</button>
+            </form>
+            <div id="post-feed">
+
             </div>
-            <button type="submit">Login</button>
-        </form>
-    </div>
-    </div>
+        </section>
+    </main>
+  
 
     <script src="main.js"></script>
 </body>
