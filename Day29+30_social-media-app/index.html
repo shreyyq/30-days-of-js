@@ -11,6 +11,7 @@
         <form id="register-form">
             <input type="text" id="reg-username" placeholder="Username" required>
             <input type="password" id="reg-password" placeholder="Password" required>
+            <input type="email" id="reg-email" placeholder="Email" required>
             <button type="submit">Register</button>
         </form>
     </div>
@@ -23,6 +24,14 @@
         </form>
     </div>
 
+    <div id="user-profile" style="display: none;">
+        <h2>User Profile</h2>
+        <p id="profile-username"></p>
+        <p id="profile-email"></p>
+        <img id="profile-picture" src="" alt="Profile Picture">
+        <button id="edit-profile-button">Edit Profile</button>
+    </div>
+    
     <div id="post-section" style="display: none;">
         <form id="post-form">
             <textarea id="post-text" placeholder="What's on your mind?" required></textarea>

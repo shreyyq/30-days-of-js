@@ -8,6 +8,10 @@ window.onload = function() {
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('post-section').style.display = 'block';
         document.getElementById('post-feed').style.display = 'block';
+
+        document.getElementById('profile-username').textContent=`Username: ${currentUser.username}`;
+        document.getElementById('profile-email').textContent=`Email: ${currentUser.email}`;
+        document.getElementById('profile-picture').src=currentUser.profilePicture|| 'default-avatar.png';
     }
     document.getElementById('logout-button').style.display='block';
     document.getElementById('logout-button').addEventListener('click',function(){
@@ -22,13 +26,14 @@ document.getElementById('register-form').addEventListener('submit',function(even
     event.preventDefault();
     const username=document.getElementById('reg-username').value;
     const password=document.getElementById('reg-password').value;
+    const email=document.getElementById('reg-email').value;
 
     const existingUser=users.find(user=>user.username===username);
     if(existingUser){
         alert('Username already exists. Please choose another one.');
     }
     else{
-        users.push({username,password});
+        users.push({username,password,email,profilePicture:''});
         localStorage.setItem('users',JSON.stringify(users));
         alert('Registration Successful! Please login.');
         document.getElementById('register-section').style.display='none';
