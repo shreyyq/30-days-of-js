@@ -1,22 +1,24 @@
+/* styles.css */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f0f0f0;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-#login-section, #post-section {
-  margin-bottom: 20px;
-}
-
-form {
+#login-section, #post-section, #post-feed {
+  width: 300px;
   background-color: white;
-  padding: 15px;
-  border-radius: 5px;
+  padding: 20px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"], input[type="password"], textarea {
+input, textarea, button {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -25,50 +27,29 @@ input[type="text"], input[type="password"], textarea {
 }
 
 button {
-  width: 100%;
-  padding: 10px;
-  background-color: #28a745;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #218838;
-}
-
-#post-feed {
-  margin-top: 20px;
+  background-color: #0056b3;
 }
 
 .post {
-  background-color: white;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
 }
 
 .post-header {
-  margin-bottom: 10px;
-}
-
-.post img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
 }
 
 .post-footer {
+  display: flex;
+  justify-content: space-between;
   margin-top: 10px;
-}
-
-.post-footer button {
-  margin-right: 10px;
-  background-color: #007bff;
-}
-
-.post-footer button:hover {
-  background-color: #0056b3;
 }
