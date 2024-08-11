@@ -1,46 +1,10 @@
-document.getElementById('login-form').addEventListener('submit',function(event){
-    event.preventDefault();
-    const username=document.getElementById('username').value;
-    const password=document.getElementById('password').value;
-
-    if(username&&password){
-    localStorage.setItem('user',JSON.stringify({username}));
-    alert('Login Successful!');
-    window.location.hash='posts';
-    }
-    else{
-        alert('Please enter username and password');
-    }
-});
-
-const posts=JSON.parse(localStorage.getItem('posts'))||[];
-
-document.getElementById('post-form').addEventListener('submit',function(event){
-    event.preventDefault();
-    const text=document.getElementById('post-text').value;
-    const image=document.getElementById('post-image').value;
-    const user=JSON.parse(localStorage.getItem('user'));
-
-    const post={
-        text,
-        image,
-        username:user? user.username:'Anonymous',
-        timestamp: new Date().toLocaleString(),
-        likes:0,
-        comments:[]
-    };
-
-    posts.push(post);
-    localStorage.setItem('posts',JSON.stringify(posts));
-    displayPosts();
-    this.reset();
-});
+let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
 function displayPosts() {
     const postFeed = document.getElementById('post-feed');
     postFeed.innerHTML = '';
 
-    posts.forEach(post => {
+    posts.forEach((post, index) => {
         const postElement = document.createElement('div');
         postElement.className = 'post';
         postElement.innerHTML = `
@@ -58,7 +22,43 @@ function displayPosts() {
     });
 }
 
-displayPosts();
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username && password) {
+        localStorage.setItem('user', JSON.stringify({ username }));
+        alert('Login Successful!');
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('post-section').style.display = 'block';
+        document.getElementById('post-feed').style.display = 'block';
+        displayPosts();
+    } else {
+        alert('Please enter username and password');
+    }
+});
+
+document.getElementById('post-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const text = document.getElementById('post-text').value;
+    const image = document.getElementById('post-image').files[0];
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const post = {
+        text,
+        image: image ? URL.createObjectURL(image) : '',
+        username: user ? user.username : 'Anonymous',
+        timestamp: new Date().toLocaleString(),
+        likes: 0,
+        comments: []
+    };
+
+    posts.push(post);
+    localStorage.setItem('posts', JSON.stringify(posts));
+    displayPosts();
+    this.reset();
+});
 
 document.getElementById('post-feed').addEventListener('click', function(event) {
     if (event.target.classList.contains('like-button')) {
@@ -76,5 +76,16 @@ document.getElementById('post-feed').addEventListener('click', function(event) {
             localStorage.setItem('posts', JSON.stringify(posts));
             displayPosts();
         }
+    }
+});
+
+// Check if user is already logged in
+document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('post-section').style.display = 'block';
+        document.getElementById('post-feed').style.display = 'block';
+        displayPosts();
     }
 });
