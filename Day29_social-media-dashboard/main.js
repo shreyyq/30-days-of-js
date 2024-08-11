@@ -1,29 +1,57 @@
+let users=JSON.parse(localStorage.getItem('users')) ||[];
 let posts = JSON.parse(localStorage.getItem('posts')) || [];
+
 window.onload = function() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        document.getElementById('register-section').style.display='none';
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('post-section').style.display = 'block';
         document.getElementById('post-feed').style.display = 'block';
-        displayPosts();
     }
+    document.getElementById('logout-button').style.display='block';
+    document.getElementById('logout-button').addEventListener('click',function(){
+        localStorage.removeItem('currentUser');
+        location.reload();
+    });
+    displayPosts();
 };
+
+// Handle user registration
+document.getElementById('register-form').addEventListener('submit',function(event){
+    event.preventDefault();
+    const username=document.getElementById('reg-username').value;
+    const password=document.getElementById('reg-password').value;
+
+    const existingUser=users.find(user=>user.username===username);
+    if(existingUser){
+        alert('Username already exists. Please choose another one.');
+    }
+    else{
+        users.push({username,password});
+        localStorage.setItem('users',JSON.stringify(users));
+        alert('Registration Successful! Please login.');
+        document.getElementById('register-section').style.display='none';
+        document.getElementById('login-section').style.display='block';
+    }
+});
 
 // Handle login
 document.getElementById('login-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
 
-    if (username && password) {
-        localStorage.setItem('user', JSON.stringify({ username }));
+    const user=users.find(user=>user.username===username&& user.password===password);
+    if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
         alert('Login Successful!');
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('post-section').style.display = 'block';
         document.getElementById('post-feed').style.display = 'block';
         displayPosts();
     } else {
-        alert('Please enter username and password');
+        alert('Invalid username or password');
     }
 });
 
@@ -32,12 +60,12 @@ document.getElementById('post-form').addEventListener('submit', function(event) 
     event.preventDefault();
     const text = document.getElementById('post-text').value;
     const image = document.getElementById('post-image').files[0];
-    const user = JSON.parse(localStorage.getItem('user'));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     const post = {
         text,
         image: image ? URL.createObjectURL(image) : '',
-        username: user ? user.username : 'Anonymous',
+        username: currentUser.username,
         timestamp: new Date().toLocaleString(),
         likes: 0,
         comments: []
@@ -54,9 +82,24 @@ function displayPosts() {
     const postFeed = document.getElementById('post-feed');
     postFeed.innerHTML = '';
 
-    posts.forEach((post, index) => {
+    const currentUser=JSON.parse(localStorage.getItem('currentUser'));
+
+    if(!currentUser){
+        console.error('No user is logged in');
+        return;
+    }
+
+    posts.forEach((post,index)=> {
         const postElement = document.createElement('div');
         postElement.className = 'post';
+
+        if(post.username===currentUser.username){
+            postElement.classList.add('logged-in-user');
+        }
+
+        const userIndex=users.findIndex(user=>user.username===post.username);
+        postElement.classList.add(`user-${userIndex+1}`);
+
         postElement.innerHTML = `
             <div class="post-header">
                 <strong>${post.username}</strong> <span>${post.timestamp}</span>
