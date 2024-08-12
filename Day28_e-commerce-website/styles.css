@@ -44,3 +44,30 @@ header{
 .add-to-cart:hover{
     background-color: #218838;
 }
+
+#checkout{
+    margin: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#checkout-form input{
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+#checkout-form button{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#checkout-form button:hover{
+    background-color: #0056b3;
+}

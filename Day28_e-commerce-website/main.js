@@ -203,7 +203,40 @@ function updateCartDisplay(){
 
         cartItem.innerHTML=`
         <p>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</p>
+        <button class="increase" data-id="${item.id}">+</button>
+        <button class="decrease" data-id="${item.id}">-</button>
+        <button class="remove" data-id="${item.id}">Remove</button>
         `;
         cartSection.appendChild(cartItem);
     });
 }
+
+document.getElementById('shopping-cart').addEventListener('click',(e)=>{
+    const productId=parseInt(e.target.getAttribute('data-id'));
+
+    if(e.target.classList.contains('increase')){
+        addToCart(productId);
+    }
+    else if(e.target.classList.contains('decrease')){
+        const product=cart.find(item=>item.id===productId);
+        if(product.quantity>1){
+            product.quantity-=1;
+        }
+        else{
+            cart=cart.filter(item=>item.id!==productId);
+        }
+        updateCartDisplay();
+    }
+    else if(e.target.classList.contains('remove')){
+        cart=cart.filter(item=>item.id!==productId);
+        updateCartDisplay();
+    }
+});
+
+document.getElementById('checkout-form').addEventListener('submit',(e)=>{
+    e.preventDefault();
+    alert('Order Placed Successfully');
+
+    cart=[];
+    updateCartDisplay();
+});
