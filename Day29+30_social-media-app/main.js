@@ -4,16 +4,9 @@ let posts = JSON.parse(localStorage.getItem('posts')) || [];
 window.onload = function() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser) {
-        document.getElementById('register-section').style.display='none';
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('post-section').style.display = 'block';
-        document.getElementById('post-feed').style.display = 'block';
-
-        document.getElementById('profile-username').textContent=`Username: ${currentUser.username}`;
-        document.getElementById('profile-email').textContent=`Email: ${currentUser.email}`;
-        document.getElementById('profile-picture').src=currentUser.profilePicture|| 'default-avatar.png';
+       showProfile(currentUser);
     }
-    document.getElementById('logout-button').style.display='block';
+
     document.getElementById('logout-button').addEventListener('click',function(){
         localStorage.removeItem('currentUser');
         location.reload();
@@ -36,8 +29,7 @@ document.getElementById('register-form').addEventListener('submit',function(even
         users.push({username,password,email,profilePicture:''});
         localStorage.setItem('users',JSON.stringify(users));
         alert('Registration Successful! Please login.');
-        document.getElementById('register-section').style.display='none';
-        document.getElementById('login-section').style.display='block';
+        toggleSections('login');
     }
 });
 
@@ -51,15 +43,27 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     if (user) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         alert('Login Successful!');
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('post-section').style.display = 'block';
-        document.getElementById('post-feed').style.display = 'block';
+        showProfile(user);
         displayPosts();
     } else {
         alert('Invalid username or password');
     }
 });
 
+// Show user profile
+function showProfile(user){
+    document.getElementById('register-section').style.display='none';
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('post-section').style.display = 'block';
+    document.getElementById('post-feed').style.display = 'block';
+    document.getElementById('notification-section').style.display='block';
+    document.getElementById('user-profile').style.display='block';
+    document.getElementById('logout-button').style.display='block';
+
+    document.getElementById('profile-username').textContent=`Username: ${user.username}`;
+    document.getElementById('profile-email').textContent=`Email: ${user.email}`;
+    document.getElementById('profile-picture').src=user.profilePicture|| 'png-transparent-default-avatar-thumbnail.png';
+}
 // Handle post creation
 document.getElementById('post-form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -80,6 +84,7 @@ document.getElementById('post-form').addEventListener('submit', function(event) 
     localStorage.setItem('posts', JSON.stringify(posts));
     displayPosts();
     this.reset();
+    addNotification('New post created!');
 });
 
 // Display posts
@@ -106,38 +111,52 @@ function displayPosts() {
         postElement.classList.add(`user-${userIndex+1}`);
 
         postElement.innerHTML = `
-            <div class="post-header">
+             <div class="post-header">
                 <strong>${post.username}</strong> <span>${post.timestamp}</span>
             </div>
             <p>${post.text}</p>
             ${post.image ? `<img src="${post.image}" alt="Post Image">` : ''}
             <div class="post-footer">
                 <button class="like-button">Like (${post.likes})</button>
-                <button class="comment-button">Comment (${post.comments.length})</button>
+                <button class="comment-button">Comment</button>
+                <div class="comment-section" style="display: none;">
+                    <form class="comment-form">
+                        <input type="text" placeholder="Write a comment..." required>
+                        <button type="submit">Add Comment</button>
+                    </form>
+                    <div class="comments">
+                        ${post.comments.map(comment => `<p>${comment}</p>`).join('')}
+                    </div>
+                </div>
             </div>
         `;
+
+        postElement.querySelector('.like-button').addEventListener('click',function(){
+            post.likes+=1;
+            localStorage.setItem('post',JSON.stringify(post));
+            displayPosts();
+        });
+
+        postElement.querySelector('.comment-button').addEventListener('click',function(){
+            const commentSection=postElement.querySelector('.comment-section');
+            commentSection.style.display=commentSection.style.display==='none'?'block':'none';    
+        });
+
+        postElement.querySelector('.comment-form').addEventListener('submit',function(event){
+            event.preventDefault();
+            const commentText=this.querySelector('input[type="text"]').value;
+            post.comments.push(commentText);
+            localStorage.setItem('post',JSON.stringify(posts));
+            displayPosts();
+        });
         postFeed.appendChild(postElement);
     });
 }
 
-// Handle post interactions
-document.getElementById('post-feed').addEventListener('click', function(event) {
-    const target = event.target;
-
-    if (target.classList.contains('like-button')) {
-        const index = Array.from(target.parentElement.parentElement.parentElement.children).indexOf(target.parentElement.parentElement);
-        posts[index].likes++;
-        localStorage.setItem('posts', JSON.stringify(posts));
-        displayPosts();
-    }
-
-    if (target.classList.contains('comment-button')) {
-        const index = Array.from(target.parentElement.parentElement.parentElement.children).indexOf(target.parentElement.parentElement);
-        const comment = prompt('Enter your comment:');
-        if (comment) {
-            posts[index].comments.push(comment);
-            localStorage.setItem('posts', JSON.stringify(posts));
-            displayPosts();
-        }
-    }
-});
+// Add notification
+function addNotification(message){
+    const notificationList=document.getElementById('notification-list');
+    const notificationItem=document.createElement('li');
+    notificationItem.textContent=`${new Date().toLocaleString()}-${message}`;
+    notificationList.appendChild(notificationItem);
+}
