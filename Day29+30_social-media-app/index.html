@@ -32,6 +32,17 @@
         <button id="edit-profile-button">Edit Profile</button>
     </div>
     
+    <div id="edit-profile-section" style="display: none;">
+        <form id="edit-profile-form">
+            <input type="text" id="edit-username" placeholder="New Username" required>
+            <input type="email" id="edit-email" placeholder="New Email" required>
+            <input type="file" id="edit-profile-picture">
+            <button type="submit">Save Changes</button>
+            <button type="button" id="cancel-edit">Cancel</button>
+        </form>
+    </div>
+    
+    
     <div id="post-section" style="display: none;">
         <form id="post-form">
             <textarea id="post-text" placeholder="What's on your mind?" required></textarea>

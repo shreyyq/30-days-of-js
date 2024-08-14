@@ -154,9 +154,107 @@ function displayPosts() {
 }
 
 // Add notification
-function addNotification(message){
-    const notificationList=document.getElementById('notification-list');
-    const notificationItem=document.createElement('li');
-    notificationItem.textContent=`${new Date().toLocaleString()}-${message}`;
-    notificationList.appendChild(notificationItem);
+ function addNotification(message) {
+        const notificationList = document.getElementById('notification-list');
+        if (!notificationList) {
+            console.error("Notification list element is missing from the DOM");
+            return;
+        }
+    
+        const notificationItem = document.createElement('li');
+        notificationItem.textContent = `${new Date().toLocaleString()} - ${message}`;
+        notificationList.appendChild(notificationItem);
+    
+        // Optionally, display the notification section
+        document.getElementById('notification-section').style.display = 'block';
+    }
+    
+    // Example usage:
+    function likePost(postId) {
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        const post = posts.find(p => p.id === postId);
+        if (post) {
+            post.likes = (post.likes || 0) + 1;
+            localStorage.setItem('posts', JSON.stringify(posts));
+            displayPosts();
+            addNotification(`You liked a post: "${post.text}"`);
+        }
+    }
+    
+    function commentOnPost(postId, comment) {
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        const post = posts.find(p => p.id === postId);
+        if (post) {
+            post.comments = post.comments || [];
+            post.comments.push(comment);
+            localStorage.setItem('posts', JSON.stringify(posts));
+            displayPosts();
+            addNotification(`You commented on a post: "${post.text}"`);
+        }
+    }
+    
+
+
+document.getElementById('edit-profile-button').addEventListener('click', function() {
+    document.getElementById('edit-profile-section').style.display = 'block';
+    document.body.classList.add('dimmed');
+});
+
+document.getElementById('cancel-edit').addEventListener('click', function() {
+    document.getElementById('edit-profile-section').style.display = 'none';
+    document.body.classList.remove('dimmed');
+});
+
+document.getElementById('edit-profile-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (!currentUser) {
+        console.warn("No user is logged in");
+        return;
+    }
+
+    const newUsername = document.getElementById('edit-username').value;
+    const newEmail = document.getElementById('edit-email').value;
+    const newProfilePicture = document.getElementById('edit-profile-picture').files[0];
+
+    currentUser.username = newUsername || currentUser.username;
+    currentUser.email = newEmail || currentUser.email;
+
+    if (newProfilePicture) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            currentUser.profilePicture = e.target.result;
+            updateUserProfile(currentUser);
+        };
+        reader.readAsDataURL(newProfilePicture);
+    } else {
+        updateUserProfile(currentUser);
+    }
+});
+
+function updateUserProfile(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    showProfile(user);
+    document.getElementById('edit-profile-section').style.display = 'none';
+    document.body.classList.remove('dimmed');
 }
+
+function addNotification(message) {
+    const notificationList = document.getElementById('notification-list');
+    if (!notificationList) {
+        console.error("Notification list element is missing from the DOM");
+        return;
+    }
+
+    const notificationItem = document.createElement('li');
+    notificationItem.textContent = `${new Date().toLocaleString()} - ${message}`;
+    notificationList.appendChild(notificationItem);
+
+    document.getElementById('notification-section').style.display = 'block';
+}
+
+// Hide notifications after a certain time
+setTimeout(() => {
+    document.getElementById('notification-section').style.display = 'none';
+}, 5000); // Notifications will disappear after 5 seconds
