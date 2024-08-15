@@ -12,9 +12,17 @@ function applyWeatherAnimation(condition){
         weatherAnimation.classList.add('sunny');
     }
 }
-function fetchWeatherData(city){
+function fetchWeatherData(city,lat,lon){
     const apiKey='6b55fbeabb82c91644f67e6922f654ae';
-    const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let url;
+
+    if(lat&&lon){
+        url=`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    }
+    else{
+        url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    }
+
     fetch(url)
     .then(response=>{
         if(!response.ok){
@@ -35,6 +43,27 @@ function fetchWeatherData(city){
     })
     .catch(error=>console.error('Error fetching weather data:',error));
 };
+
+function getCurrentLocation(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(
+            position=>{
+                const lat=position.coords.latitude;
+                const lon=position.coords.longitude;
+                fetchWeatherData(null,lat,lon);
+            },
+            error=>{
+                console.error('Error getting location:',error);
+                fetchWeatherData('Nainital');
+                
+            }
+        );
+    }
+    else{
+        console.error('Geolocation is not supported by this browser');
+        fetchWeatherData('Nainital');
+    }
+}
 
     function fetchForecastData(city){
         const apiKey='6b55fbeabb82c91644f67e6922f654ae';
@@ -83,8 +112,7 @@ function displayForecast(forecastList){
 }
 
 window.onload=function(){
-const defaultCity='Almora';
-fetchWeatherData(defaultCity);
+getCurrentLocation();
 document.getElementById('forecastButton').disabled=true;
 };
 
